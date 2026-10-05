@@ -2,6 +2,77 @@
    README Studio — Visual Block Editor
    ================================================================ */
 
+// ── Custom Badge Engine ──────────────────────────────────────────
+
+function escXML(s) {
+  return String(s||'').replace(/&/g,'&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;').replace(/"/g,'&quot;');
+}
+
+const BADGE_ICONS = {
+  blocks:   c => `<rect x="11.5" y="9" width="9" height="2.5" rx=".6" fill="${c}"/><rect x="11.5" y="12.5" width="7" height="2.5" rx=".6" fill="${c}" fill-opacity=".7"/><rect x="11.5" y="16" width="5" height="2" rx=".6" fill="${c}" fill-opacity=".4"/>`,
+  grid:     c => `<rect x="11.5" y="9" width="3.8" height="3.8" rx=".7" fill="${c}"/><rect x="16.7" y="9" width="3.8" height="3.8" rx=".7" fill="${c}"/><rect x="11.5" y="13.7" width="3.8" height="3.8" rx=".7" fill="${c}"/><rect x="16.7" y="13.7" width="3.8" height="3.8" rx=".7" fill="${c}"/>`,
+  bolt:     c => `<path d="M18.5 8.5 L13.5 13.5 L16.5 13.5 L14 18 L20.5 12 L17.5 12 Z" fill="${c}"/>`,
+  markdown: c => `<path d="M11 17 L11 9 L16 14.5 L21 9 L21 17" stroke="${c}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  code:     c => `<path d="M14.5 9.5 L11 13 L14.5 16.5" stroke="${c}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/><path d="M17.5 9.5 L21 13 L17.5 16.5" stroke="${c}" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  star:     c => `<path d="M16 9 L17.2 12.6 L21 12.6 L17.9 14.8 L19.1 18.5 L16 16.3 L12.9 18.5 L14.1 14.8 L11 12.6 L14.8 12.6 Z" fill="${c}"/>`,
+  rocket:   c => `<path d="M16 9 C19 9 21 11 21 14 L18 17 C17.5 17 17 16 15.5 16 C14 16 13.5 17 13 17 L10 14 C10 11 13 9 16 9 Z" stroke="${c}" stroke-width="1.3" stroke-linejoin="round" fill="${c}" fill-opacity=".2"/><circle cx="16" cy="12.5" r="1" fill="${c}"/>`,
+  check:    c => `<path d="M11 13 L14.5 16.5 L21 9.5" stroke="${c}" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" fill="none"/>`,
+  flame:    c => `<path d="M16 18 C13 18 11 15.5 11 13 C11 11 12.5 9.5 13.5 8.5 C13.5 10 14 11 16 11.5 C15.5 10.5 15.5 9.5 16.5 8 C18 10 21 11 21 13.5 C21 16 19 18 16 18 Z" fill="${c}" fill-opacity=".6" stroke="${c}" stroke-width=".8"/>`,
+  layers:   c => `<path d="M11 10.5 L16 9 L21 10.5 L16 12 Z" fill="${c}" fill-opacity=".4" stroke="${c}" stroke-width="1" stroke-linejoin="round"/><path d="M11 13 L16 11.5 L21 13" stroke="${c}" stroke-width="1.2" stroke-linecap="round" fill="none"/><path d="M11 15.5 L16 14 L21 15.5 L16 17 Z" fill="${c}" fill-opacity=".2" stroke="${c}" stroke-width="1" stroke-linejoin="round"/>`,
+  sparkles: c => `<path d="M16 8 L16.8 11.2 L20 11.2 L17.4 13 L18.2 16.2 L16 14.5 L13.8 16.2 L14.6 13 L12 11.2 L15.2 11.2 Z" fill="${c}"/><circle cx="11.5" cy="15.5" r="1.2" fill="${c}" fill-opacity=".5"/><circle cx="20.5" cy="9.5" r=".9" fill="${c}" fill-opacity=".4"/>`,
+  heart:    c => `<path d="M16 17.5 C16 17.5 10.5 14 10.5 11 C10.5 9.3 11.8 8 13.5 8 C14.5 8 15.3 8.5 16 9.3 C16.7 8.5 17.5 8 18.5 8 C20.2 8 21.5 9.3 21.5 11 C21.5 14 16 17.5 16 17.5 Z" fill="${c}" fill-opacity=".7" stroke="${c}" stroke-width=".8"/>`,
+};
+
+const BADGE_ICON_NAMES = {
+  blocks:'Bars', grid:'Grid', bolt:'Bolt', markdown:'Markdown', code:'Code',
+  star:'Star', rocket:'Rocket', check:'Check', flame:'Flame', layers:'Layers',
+  sparkles:'Sparkles', heart:'Heart',
+};
+
+function generateBadgeSVG(cfg) {
+  const accent  = '#' + (cfg.color       || '5B6CF9');
+  const bg      = '#' + (cfg.darkBg      || '0C0D16');
+  const valBg   = '#' + (cfg.valueBg     || '161728');
+  const txt     = '#' + (cfg.textColor   || 'F8FAFC');
+  const aLight  = '#' + (cfg.accentLight || '818CF8');
+
+  const label = String(cfg.label || '');
+  const value = String(cfg.value || '');
+  const labelW = Math.max(20, label.length * 7);
+  const valueW = Math.max(24, value.length * 6.5);
+
+  const leftPad = 8, iconArea = 23, labelRPad = 9;
+  const divX = leftPad + iconArea + labelW + labelRPad;
+  const valLPad = 10, valRPad = 10;
+  const W = Math.round(divX + valLPad + valueW + valRPad);
+  const valCX = Math.round((divX + W) / 2);
+
+  const iconFn = BADGE_ICONS[cfg.icon] || BADGE_ICONS.bolt;
+
+  return `<svg width="${W}" height="26" viewBox="0 0 ${W} 26" fill="none" xmlns="http://www.w3.org/2000/svg">` +
+    `<rect width="${W}" height="26" rx="6" fill="${bg}"/>` +
+    `<path d="M${divX+1} 1 L${W-6} 1 Q${W-1} 1 ${W-1} 6 L${W-1} 20 Q${W-1} 25 ${W-6} 25 L${divX+1} 25 Z" fill="${valBg}"/>` +
+    `<circle cx="16" cy="13" r="8" fill="${accent}" fill-opacity="0.14" stroke="${accent}" stroke-width="1.2" stroke-opacity="0.65"/>` +
+    iconFn(aLight) +
+    `<text x="31" y="17" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="${txt}" letter-spacing="0.2">${escXML(label)}</text>` +
+    `<line x1="${divX}" y1="5" x2="${divX}" y2="21" stroke="${accent}" stroke-opacity="0.45"/>` +
+    `<text x="${valCX}" y="17" text-anchor="middle" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif" font-size="11" fill="${aLight}" letter-spacing="0.1">${escXML(value)}</text>` +
+    `<rect x="0.5" y="0.5" width="${W-1}" height="25" rx="5.5" stroke="${accent}" stroke-opacity="0.28" stroke-width="1" fill="none"/>` +
+    `</svg>`;
+}
+
+function badgeSVGtoDataURI(svg) {
+  return 'data:image/svg+xml,' + encodeURIComponent(svg);
+}
+
+function badgeSVGtoBase64(svg) {
+  return 'data:image/svg+xml;base64,' + btoa(unescape(encodeURIComponent(svg)));
+}
+
+function defaultBadgeCfg(label, value, icon) {
+  return { label: label||'Badge', value: value||'custom', icon: icon||'bolt', color:'5B6CF9', darkBg:'0C0D16', valueBg:'161728', textColor:'F8FAFC', accentLight:'818CF8' };
+}
+
 // ── Block Registry ───────────────────────────────────────────────
 const BLOCK_REGISTRY = {
 
@@ -331,6 +402,65 @@ const BLOCK_REGISTRY = {
       { type:'range',    k:'width', label:'Size (px)', min:16, max:200 },
       { type:'select',   k:'align', label:'Align', opts:['left','center','right'] },
       { type:'text',     k:'link',  label:'Link URL (optional)' },
+    ]
+  },
+
+  badge: {
+    label: 'Custom Badge',
+    cat: 'content',
+    thumb: `<div class="thumb-badge-custom"><div class="thumb-badge-inner">◈ Badge <span>value</span></div></div>`,
+    defaults: () => defaultBadgeCfg('My Badge', 'custom'),
+    html(b) {
+      const svg = generateBadgeSVG(b);
+      return `<div style="text-align:${b.align||'center'};padding:4px 0"><img src="${badgeSVGtoDataURI(svg)}" height="26" alt="${escXML(b.label)}"></div>`;
+    },
+    md(b) {
+      const svg = generateBadgeSVG(b);
+      return `<p align="${b.align||'center'}"><img src="${badgeSVGtoBase64(svg)}" height="26" alt="${escXML(b.label)}" /></p>`;
+    },
+    controls: [
+      { type:'text',       k:'label',       label:'Label' },
+      { type:'text',       k:'value',       label:'Value' },
+      { type:'badge-icon', k:'icon',        label:'Icon' },
+      { type:'color',      k:'color',       label:'Accent Color' },
+      { type:'color',      k:'darkBg',      label:'Background' },
+      { type:'color',      k:'accentLight', label:'Value Text' },
+      { type:'select',     k:'align',       label:'Align', opts:['center','left','right'] },
+    ]
+  },
+
+  badgerow: {
+    label: 'Badge Row',
+    cat: 'content',
+    thumb: `<div class="thumb-badge-row"><div class="tbr1"></div><div class="tbr2"></div><div class="tbr3"></div></div>`,
+    defaults: () => ({
+      badges: [
+        defaultBadgeCfg('Editor', 'drag & drop', 'blocks'),
+        defaultBadgeCfg('Templates', '59+', 'grid'),
+        defaultBadgeCfg('Output', 'pure .md', 'markdown'),
+      ],
+      align: 'center',
+      gap: 6,
+    }),
+    html(b) {
+      const imgs = (b.badges||[]).map(cfg => {
+        const svg = generateBadgeSVG(cfg);
+        return `<img src="${badgeSVGtoDataURI(svg)}" height="26" alt="${escXML(cfg.label)}" style="display:inline-block">`;
+      }).join('');
+      const just = b.align==='left'?'flex-start':b.align==='right'?'flex-end':'center';
+      return `<div style="display:flex;flex-wrap:wrap;gap:${b.gap||6}px;justify-content:${just};padding:4px 0">${imgs}</div>`;
+    },
+    md(b) {
+      const imgs = (b.badges||[]).map(cfg => {
+        const svg = generateBadgeSVG(cfg);
+        return `<img src="${badgeSVGtoBase64(svg)}" height="26" alt="${escXML(cfg.label)}" />`;
+      }).join('\n  ');
+      return `<p align="${b.align||'center'}">\n  ${imgs}\n</p>`;
+    },
+    controls: [
+      { type:'badge-row', k:'badges', label:'Badges' },
+      { type:'select',    k:'align',  label:'Align', opts:['center','left','right'] },
+      { type:'range',     k:'gap',    label:'Gap (px)', min:2, max:20 },
     ]
   },
 
@@ -813,6 +943,16 @@ function buildControl(ctrl, block) {
       field.appendChild(buildSocialsEditor(block, k));
       break;
     }
+    case 'badge-icon': {
+      field.appendChild(lbl());
+      field.appendChild(buildBadgeIconPicker(block, k));
+      break;
+    }
+    case 'badge-row': {
+      field.appendChild(lbl());
+      field.appendChild(buildBadgeRowEditor(block, k));
+      break;
+    }
     default:
       return null;
   }
@@ -931,6 +1071,160 @@ function buildSocialsEditor(block, k) {
       links.push({ platform: 'github', handle: '' });
       block[k] = links;
       render();
+    });
+    wrap.appendChild(addBtn);
+  }
+
+  render();
+  return wrap;
+}
+
+// ── Badge Icon Picker ─────────────────────────────────────────────
+function buildBadgeIconPicker(block, k) {
+  const wrap = document.createElement('div');
+  wrap.className = 'badge-icon-grid';
+
+  Object.entries(BADGE_ICON_NAMES).forEach(([id, name]) => {
+    const btn = document.createElement('button');
+    btn.className = 'badge-icon-opt' + (block[k] === id ? ' active' : '');
+    btn.title = name;
+
+    const accentColor = '#' + (block.accentLight || '818CF8');
+    const previewSVG = `<svg width="22" height="22" viewBox="7 4 18 18" fill="none" xmlns="http://www.w3.org/2000/svg">` +
+      `<circle cx="16" cy="13" r="9" fill="#5B6CF9" fill-opacity="0.15" stroke="#5B6CF9" stroke-width="1.5"/>` +
+      BADGE_ICONS[id](accentColor) +
+      `</svg>`;
+
+    btn.innerHTML = previewSVG + `<span class="badge-icon-name">${name}</span>`;
+    btn.addEventListener('click', () => {
+      block[k] = id;
+      wrap.querySelectorAll('.badge-icon-opt').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      refreshBlockCanvas(block.id);
+    });
+    wrap.appendChild(btn);
+  });
+
+  return wrap;
+}
+
+// ── Badge Row Editor ──────────────────────────────────────────────
+function buildBadgeRowEditor(block, k) {
+  const wrap = document.createElement('div');
+  wrap.className = 'badge-row-editor';
+
+  function render() {
+    wrap.innerHTML = '';
+    const badges = block[k] || [];
+
+    badges.forEach((cfg, i) => {
+      const svg = generateBadgeSVG(cfg);
+      const url = badgeSVGtoDataURI(svg);
+
+      const item = document.createElement('div');
+      item.className = 'brl-item';
+
+      // Preview row
+      const topRow = document.createElement('div');
+      topRow.className = 'brl-top';
+
+      const preview = document.createElement('img');
+      preview.src = url;
+      preview.height = 20;
+      preview.className = 'brl-preview';
+
+      const delBtn = document.createElement('button');
+      delBtn.className = 'brl-del';
+      delBtn.innerHTML = '×';
+      delBtn.title = 'Remove';
+      delBtn.addEventListener('click', () => {
+        badges.splice(i, 1);
+        block[k] = badges;
+        render();
+        refreshBlockCanvas(block.id);
+      });
+
+      topRow.appendChild(preview);
+      topRow.appendChild(delBtn);
+      item.appendChild(topRow);
+
+      // Edit fields
+      const fields = document.createElement('div');
+      fields.className = 'brl-fields';
+
+      function makeInput(placeholder, val, onInput) {
+        const inp = document.createElement('input');
+        inp.type = 'text';
+        inp.className = 'ctrl-input brl-inp';
+        inp.placeholder = placeholder;
+        inp.value = val || '';
+        inp.addEventListener('input', () => {
+          onInput(inp.value);
+          // update preview
+          const newSvg = generateBadgeSVG(cfg);
+          preview.src = badgeSVGtoDataURI(newSvg);
+          refreshBlockCanvas(block.id);
+        });
+        return inp;
+      }
+
+      fields.appendChild(makeInput('Label', cfg.label, v => { cfg.label = v; }));
+      fields.appendChild(makeInput('Value', cfg.value, v => { cfg.value = v; }));
+
+      // Colors + icon row
+      const colorRow = document.createElement('div');
+      colorRow.className = 'brl-color-row';
+
+      function makeColorPicker(title, prop) {
+        const swatch = document.createElement('input');
+        swatch.type = 'color';
+        swatch.className = 'brl-color-pick';
+        swatch.title = title;
+        swatch.value = '#' + (cfg[prop] || '5B6CF9');
+        swatch.addEventListener('input', () => {
+          cfg[prop] = swatch.value.replace('#','');
+          const newSvg = generateBadgeSVG(cfg);
+          preview.src = badgeSVGtoDataURI(newSvg);
+          refreshBlockCanvas(block.id);
+        });
+        return swatch;
+      }
+
+      colorRow.appendChild(makeColorPicker('Accent', 'color'));
+      colorRow.appendChild(makeColorPicker('Text/Icon', 'accentLight'));
+      colorRow.appendChild(makeColorPicker('Background', 'darkBg'));
+
+      // Icon select
+      const iconSel = document.createElement('select');
+      iconSel.className = 'ctrl-input ctrl-select brl-icon-sel';
+      Object.entries(BADGE_ICON_NAMES).forEach(([id, name]) => {
+        const opt = document.createElement('option');
+        opt.value = id; opt.textContent = name;
+        if (cfg.icon === id) opt.selected = true;
+        iconSel.appendChild(opt);
+      });
+      iconSel.addEventListener('change', () => {
+        cfg.icon = iconSel.value;
+        const newSvg = generateBadgeSVG(cfg);
+        preview.src = badgeSVGtoDataURI(newSvg);
+        refreshBlockCanvas(block.id);
+      });
+      colorRow.appendChild(iconSel);
+      fields.appendChild(colorRow);
+      item.appendChild(fields);
+      wrap.appendChild(item);
+    });
+
+    // Add button
+    const addBtn = document.createElement('button');
+    addBtn.className = 'brl-add-btn';
+    addBtn.innerHTML = '<svg width="10" height="10" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="3"><line x1="12" y1="5" x2="12" y2="19"/><line x1="5" y1="12" x2="19" y2="12"/></svg> Add Badge';
+    addBtn.addEventListener('click', () => {
+      const icons = Object.keys(BADGE_ICON_NAMES);
+      badges.push(defaultBadgeCfg('Badge', 'new', icons[badges.length % icons.length]));
+      block[k] = badges;
+      render();
+      refreshBlockCanvas(block.id);
     });
     wrap.appendChild(addBtn);
   }

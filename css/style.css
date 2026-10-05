@@ -405,3 +405,82 @@ a { color:var(--accent);text-decoration:none }
   transition:all var(--tr);display:flex;align-items:center;gap:5px;
 }
 .btn-templates:hover { border-color:var(--accent);color:var(--accent) }
+
+/* ── Badge Block Thumbnails ──────────────────────────────────── */
+.thumb-badge-custom {
+  width:100%;height:100%;display:flex;align-items:center;justify-content:center;padding:4px;
+}
+.thumb-badge-inner {
+  background:#0C0D16;border-radius:5px;padding:3px 8px;font-size:9px;font-weight:600;
+  color:#F8FAFC;display:flex;align-items:center;gap:5px;border:1px solid rgba(91,108,249,.3);
+}
+.thumb-badge-inner span {
+  background:#161728;color:#818CF8;font-size:8px;padding:1px 5px;border-radius:3px;
+  border-left:1px solid rgba(91,108,249,.3);margin-left:2px;padding-left:7px;
+}
+.thumb-badge-row {
+  display:flex;gap:2px;align-items:center;justify-content:center;width:100%;height:100%;padding:4px;
+}
+.thumb-badge-row .tbr1,.thumb-badge-row .tbr2,.thumb-badge-row .tbr3 {
+  height:10px;border-radius:3px;background:#0C0D16;border:1px solid rgba(91,108,249,.3);
+}
+.thumb-badge-row .tbr1 { width:34px }
+.thumb-badge-row .tbr2 { width:28px }
+.thumb-badge-row .tbr3 { width:22px }
+
+/* ── Badge Icon Picker ───────────────────────────────────────── */
+.badge-icon-grid {
+  display:grid;grid-template-columns:repeat(4,1fr);gap:4px;padding:2px 0;
+}
+.badge-icon-opt {
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:2px;padding:5px 2px;border-radius:7px;border:1.5px solid var(--border);
+  background:var(--bg-elevated);cursor:pointer;transition:all var(--tr);
+}
+.badge-icon-opt:hover { border-color:var(--accent);background:var(--accent-2) }
+.badge-icon-opt.active {
+  border-color:var(--accent);background:var(--accent-2);
+  box-shadow:0 0 0 2px rgba(91,108,249,.12);
+}
+.badge-icon-opt svg { display:block }
+.badge-icon-name {
+  font-size:9px;color:var(--text-3);font-weight:500;line-height:1;
+  font-family:var(--fm);white-space:nowrap;
+}
+.badge-icon-opt.active .badge-icon-name { color:var(--accent) }
+
+/* ── Badge Row Editor ────────────────────────────────────────── */
+.badge-row-editor { display:flex;flex-direction:column;gap:6px }
+.brl-item {
+  border:1px solid var(--border);border-radius:var(--radius-sm);
+  background:var(--bg-elevated);overflow:hidden;
+}
+.brl-top {
+  display:flex;align-items:center;justify-content:space-between;
+  padding:6px 8px;gap:6px;
+}
+.brl-preview { max-width:140px;object-fit:contain;display:block }
+.brl-del {
+  width:20px;height:20px;border-radius:4px;font-size:13px;line-height:1;
+  color:var(--text-3);background:transparent;flex-shrink:0;transition:all var(--tr);
+  display:flex;align-items:center;justify-content:center;
+}
+.brl-del:hover { background:rgba(239,68,68,.1);color:var(--danger) }
+.brl-fields { padding:0 8px 8px;display:flex;flex-direction:column;gap:5px }
+.brl-inp { font-size:11px;padding:5px 8px }
+.brl-color-row {
+  display:flex;gap:4px;align-items:center;flex-wrap:wrap;
+}
+.brl-color-pick {
+  width:26px;height:26px;border-radius:5px;border:1.5px solid var(--border);
+  padding:0;cursor:pointer;background:none;flex-shrink:0;
+}
+.brl-color-pick:hover { border-color:var(--accent) }
+.brl-icon-sel { flex:1;min-width:0;font-size:10px;padding:4px 6px }
+.brl-add-btn {
+  display:flex;align-items:center;gap:5px;padding:6px 10px;
+  border-radius:var(--radius-sm);font-size:11px;font-weight:500;
+  border:1px dashed var(--border);color:var(--text-2);background:transparent;
+  cursor:pointer;transition:all var(--tr);width:100%;justify-content:center;
+}
+.brl-add-btn:hover { border-color:var(--accent);color:var(--accent);background:var(--accent-3) }

@@ -64,7 +64,7 @@ Select a block on the canvas — the right panel shows all its controls: text fi
 |---|---|
 | Header | Wave Banner (Capsule Render), Typing Animation |
 | Text | Heading, Paragraph |
-| Content | Tech Stack (100+ icons), Custom Markdown, SVG Icon |
+| Content | Tech Stack (100+ icons), Custom Markdown, SVG Icon, **Custom Badge**, **Badge Row** |
 | Stats | GitHub Stats, Streak Stats, Top Languages, Trophy Cabinet |
 | Social | Social Links, View Counter |
 | Layout | Divider |
@@ -95,6 +95,7 @@ Switch to **Markdown** to see the raw output, or click **Copy Markdown** / **.md
 - **Live markdown output** — switches between canvas and markdown with no re-generation delay
 - **GitHub Stats integration** — `github-readme-stats`, `streak-stats.demolab.com`, top languages, trophy cabinet; pick a color theme once and all cards match
 - **Animated headers** — wave, shark, rect, venom banners from Capsule Render; typing animation from `readme-typing-svg`
+- **Custom SVG badges** — design unique dark-style badges in the editor with 12 icon choices, full color control, and inline base64 export ready for GitHub
 - **Zero dependencies** — pure HTML, CSS and vanilla JS; no `node_modules`, no build tool, no server
 
 ---
