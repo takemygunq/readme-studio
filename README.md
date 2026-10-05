@@ -10,10 +10,11 @@ Pick a template, drag blocks, tweak every property — export clean, ready-to-pa
 No login. No build step. Runs in the browser.
 
 <p>
-  <img src="https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-no%20build%20step-5B6CF9?style=flat-square&labelColor=0c0d12" height="26" alt="Pure HTML/CSS/JS — no build step" />
-  <img src="https://img.shields.io/badge/59%20templates-gallery-7C3AED?style=flat-square&labelColor=0c0d12" height="26" alt="59 ready-made templates" />
-  <img src="https://img.shields.io/badge/100%2B%20icons-shields.io-0D9488?style=flat-square&labelColor=0c0d12" height="26" alt="100+ tech icons" />
-  <img src="https://img.shields.io/badge/GitHub%20Pages-live-22C55E?style=flat-square&labelColor=0c0d12" height="26" alt="Deployed on GitHub Pages" />
+  <img src="public/brand/badges/badge-editor.svg" height="26" alt="Editor — drag &amp; drop" />
+  <img src="public/brand/badges/badge-templates.svg" height="26" alt="59+ templates" />
+  <img src="public/brand/badges/badge-icons.svg" height="26" alt="100+ tech icons" />
+  <img src="public/brand/badges/badge-output.svg" height="26" alt="Output — pure .md" />
+  <img src="public/brand/badges/badge-stack.svg" height="26" alt="Stack — HTML · CSS · JS" />
 </p>
 
 <img src="docs/media/demo.gif" alt="README Studio demo: editing blocks, opening the template gallery, loading a template, switching to markdown view" width="100%" />

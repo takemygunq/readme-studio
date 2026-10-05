@@ -1,0 +1,12 @@
+<svg width="182" height="26" viewBox="0 0 182 26" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <rect width="182" height="26" rx="6" fill="#0C0D16"/>
+  <path d="M73 1 L176 1 Q181 1 181 6 L181 20 Q181 25 176 25 L73 25 Z" fill="#161728"/>
+  <circle cx="16" cy="13" r="8" fill="#5B6CF9" fill-opacity="0.14" stroke="#5B6CF9" stroke-width="1.2" stroke-opacity="0.65"/>
+  <!-- </> icon -->
+  <path d="M14.5 9.5 L11 13 L14.5 16.5" stroke="#818CF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <path d="M17.5 9.5 L21 13 L17.5 16.5" stroke="#818CF8" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" fill="none"/>
+  <text x="31" y="17" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif" font-size="12" font-weight="600" fill="#F8FAFC" letter-spacing="0.2">Stack</text>
+  <line x1="72" y1="5" x2="72" y2="21" stroke="#5B6CF9" stroke-opacity="0.45"/>
+  <text x="127" y="17" text-anchor="middle" font-family="'Segoe UI',system-ui,-apple-system,Helvetica,Arial,sans-serif" font-size="11" fill="#818CF8" letter-spacing="0.1">HTML · CSS · JS</text>
+  <rect x="0.5" y="0.5" width="181" height="25" rx="5.5" stroke="#5B6CF9" stroke-opacity="0.28" stroke-width="1" fill="none"/>
+</svg>
