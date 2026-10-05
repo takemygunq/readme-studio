@@ -404,10 +404,30 @@ const $ = id => document.getElementById(id);
 const $q = s => document.querySelector(s);
 const $qa = s => document.querySelectorAll(s);
 
+// ── Default blocks ────────────────────────────────────────────────
+function loadDefaults() {
+  const defaults = [
+    { type: 'banner',  bannerType:'waving', colors:'6,11,20', text:'Your Name', size:42, fontColor:'fff', height:180, anim:'twinkling' },
+    { type: 'typing',  lines:'Full Stack Developer;Open Source Enthusiast;Building cool things', color:'5B6CF9', font:'Fira+Code', width:435, pause:1000, align:'center' },
+    { type: 'bio',     text:'👋 Hi! I\'m a developer passionate about creating tools that help people. I love open source and learning new technologies.', align:'center', bold:false, italic:false },
+    { type: 'skills',  icons:['javascript','typescript','react','nodejs','python','docker'], style:'for-the-badge', align:'center', gap:4 },
+    { type: 'divider', style:'line' },
+    { type: 'stats',   username:'', theme:'radical', showIcons:true, hideBorder:true, countPrivate:true, width:49, align:'center' },
+    { type: 'streak',  username:'', theme:'radical', hideBorder:true, width:60, align:'center' },
+  ];
+
+  defaults.forEach(d => {
+    const def = BLOCK_REGISTRY[d.type];
+    if (!def) return;
+    S.blocks.push({ ...def.defaults(), ...d, id: newId() });
+  });
+}
+
 // ── Boot ──────────────────────────────────────────────────────────
 document.addEventListener('DOMContentLoaded', () => {
   buildLibrary();
   bindToolbar();
+  loadDefaults();
   renderCanvas();
 });
 
