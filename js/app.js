@@ -1017,6 +1017,748 @@ function setView(v) {
   }
 }
 
+// ── Template Gallery ──────────────────────────────────────────────
+
+// Compact builder helpers
+function bBanner(bannerType, colors, text, fontColor, height, anim) {
+  return { type:'banner', bannerType:bannerType||'waving', colors:colors||'6,11,20', text:text||'Your Name', size:42, fontColor:fontColor||'fff', height:height||180, anim:anim||'twinkling' };
+}
+function bTyping(lines, color) {
+  return { type:'typing', lines, color:color||'5B6CF9', font:'Fira+Code', width:435, pause:1000, align:'center' };
+}
+function bHeading(text, emoji, align, color) {
+  return { type:'heading', text, emoji:emoji||'', level:'h2', align:align||'center', color:color||'' };
+}
+function bBio(text, align) {
+  return { type:'bio', text, align:align||'center', bold:false, italic:false };
+}
+function bSkills(icons, style, align) {
+  return { type:'skills', icons, style:style||'for-the-badge', align:align||'center', gap:4 };
+}
+function bStats(theme, width) {
+  return { type:'stats', username:'', theme:theme||'radical', showIcons:true, hideBorder:true, countPrivate:true, width:width||49, align:'center' };
+}
+function bStreak(theme, width) {
+  return { type:'streak', username:'', theme:theme||'radical', hideBorder:true, width:width||60, align:'center' };
+}
+function bLangs(theme, layout) {
+  return { type:'langs', username:'', theme:theme||'radical', layout:layout||'compact', hideBorder:true, width:49, align:'center' };
+}
+function bTrophy(theme) {
+  return { type:'trophy', username:'', theme:theme||'radical', row:1, col:6, align:'center' };
+}
+function bSocials() {
+  return { type:'socials', links:[], style:'for-the-badge', align:'center' };
+}
+function bViews(color) {
+  return { type:'views', username:'', color:color||'5B6CF9', style:'for-the-badge', label:'Profile Views' };
+}
+function bDiv(style) { return { type:'divider', style:style||'line' }; }
+function bCustom(text) { return { type:'custom', text }; }
+
+const TEMPLATES = [
+  // ── Role: Developer ─────────────────────────────────────────
+  { id:'fullstack', name:'Full Stack Dev', cat:'role', tag:'🧩 Full Stack',
+    colors:['#667eea','#764ba2'],
+    blocks:[
+      bBanner('waving','6,11,20','Full Stack Developer','fff',180,'twinkling'),
+      bTyping('React · Node.js · TypeScript;Building full-stack products;Open source contributor','667eea'),
+      bBio('💡 I build end-to-end products — from pixel-perfect UIs to scalable APIs. Passionate about DX and clean architecture.'),
+      bSkills(['javascript','typescript','react','nodejs','graphql','docker','postgresql','redis']),
+      bDiv(), bStats('radical'), bStreak('radical'), bLangs('radical'),
+    ]
+  },
+  { id:'frontend', name:'Frontend Dev', cat:'role', tag:'🎨 Frontend',
+    colors:['#f093fb','#f5576c'],
+    blocks:[
+      bBanner('waving','0,30,10','Frontend Engineer','fff',180,'twinkling'),
+      bTyping('Building beautiful UIs;React & Vue specialist;Pixel-perfect developer','f093fb'),
+      bBio('🎨 Frontend engineer obsessed with UX, performance, and accessibility. I turn Figma files into living, breathing products.'),
+      bSkills(['javascript','typescript','react','vuejs','nextjs','tailwindcss','figma','webpack']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'backend', name:'Backend Dev', cat:'role', tag:'⚙️ Backend',
+    colors:['#4facfe','#00f2fe'],
+    blocks:[
+      bBanner('shark','0,20,25','Backend Engineer','fff',200,'twinkling'),
+      bTyping('APIs · Databases · Microservices;Node.js & Go specialist;Scalability first','4facfe'),
+      bBio('⚙️ I design robust backend systems — REST & GraphQL APIs, event-driven architectures, and high-performance databases.'),
+      bSkills(['nodejs','golang','python','postgresql','redis','docker','kubernetes','aws']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'), bLangs('cobalt'),
+    ]
+  },
+  { id:'devops', name:'DevOps / SRE', cat:'role', tag:'🔧 DevOps',
+    colors:['#43e97b','#38f9d7'],
+    blocks:[
+      bBanner('rect','0,15,10','DevOps Engineer','fff',140,'fadeIn'),
+      bTyping('Kubernetes · CI/CD · IaC;SRE mindset;Automating everything','43e97b'),
+      bBio('🔧 Platform engineer who automates all the things. Kubernetes, Terraform, CI/CD pipelines — if it can be scripted, I\'ll script it.'),
+      bSkills(['docker','kubernetes','terraform','ansible','githubactions','aws','gcp','linux']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+  { id:'datascience', name:'Data Scientist', cat:'role', tag:'📊 Data Science',
+    colors:['#f6d365','#fda085'],
+    blocks:[
+      bBanner('waving','25,30,0','Data Scientist','fff',180,'twinkling'),
+      bTyping('Python · ML · Deep Learning;Turning data into insights;Kaggle enthusiast','f6a035'),
+      bBio('📊 Data scientist with a passion for making sense of messy data. I build ML models, visualizations, and data pipelines.'),
+      bSkills(['python','pytorch','tensorflow','jupyter','pandas','scikitlearn','r','sql']),
+      bDiv(), bStats('dracula'), bStreak('dracula'), bLangs('dracula'),
+    ]
+  },
+  { id:'ml-engineer', name:'ML Engineer', cat:'role', tag:'🤖 ML/AI',
+    colors:['#a18cd1','#fbc2eb'],
+    blocks:[
+      bBanner('waving','20,5,0','ML Engineer','fff',180,'twinkling'),
+      bTyping('LLMs · Neural Networks · MLOps;PyTorch & TensorFlow;From research to production','a18cd1'),
+      bBio('🤖 ML engineer building AI systems that actually ship. Specializing in LLM fine-tuning, computer vision, and MLOps infrastructure.'),
+      bSkills(['python','pytorch','tensorflow','docker','kubernetes','aws','fastapi','postgres']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'mobile', name:'Mobile Dev', cat:'role', tag:'📱 Mobile',
+    colors:['#0ba360','#3cba92'],
+    blocks:[
+      bBanner('waving','0,15,5','Mobile Developer','fff',180,'twinkling'),
+      bTyping('React Native · Flutter;iOS & Android;Ship to both stores','0ba360'),
+      bBio('📱 Mobile developer building apps for iOS and Android. React Native is my hammer; everything looks like a nail.'),
+      bSkills(['reactnative','flutter','swift','kotlin','firebase','typescript','xcode','androidstudio']),
+      bDiv(), bStats('tokyonight'), bStreak('tokyonight'),
+    ]
+  },
+  { id:'gamedev', name:'Game Dev', cat:'role', tag:'🎮 Games',
+    colors:['#f7971e','#ffd200'],
+    blocks:[
+      bBanner('venom','0,25,10','Game Developer','fff',200,'twinkling'),
+      bTyping('Unity · Unreal · Godot;Building virtual worlds;Indie game dev','f7971e'),
+      bBio('🎮 Indie game developer creating immersive experiences. From prototypes to shipped titles — I do it all.'),
+      bSkills(['unity','csharp','cpp','blender','godot','git','steam','aseprite']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'blockchain', name:'Web3 / Blockchain', cat:'role', tag:'⛓️ Web3',
+    colors:['#f093fb','#f5576c'],
+    blocks:[
+      bBanner('waving','0,30,20','Web3 Developer','fff',180,'twinkling'),
+      bTyping('Solidity · DeFi · NFTs;Building on Ethereum;Decentralize everything','f093fb'),
+      bBio('⛓️ Web3 developer building decentralized applications. Smart contracts, DeFi protocols, and NFT infrastructure.'),
+      bSkills(['solidity','typescript','javascript','react','nodejs','hardhat','ethers','ipfs']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'security', name:'Security Researcher', cat:'role', tag:'🔐 Security',
+    colors:['#e53e3e','#fc4444'],
+    blocks:[
+      bBanner('shark','0,30,20','Security Researcher','fff',200,'twinkling'),
+      bTyping('CTF · Pen Testing · Bug Bounty;Finding what others miss;Security is a mindset','e53e3e'),
+      bBio('🔐 Security researcher and ethical hacker. CTF competitor, bug bounty hunter, and open-source security tooling contributor.'),
+      bSkills(['python','bash','linux','docker','kali','burpsuite','metasploit','git']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+  { id:'cloud', name:'Cloud Architect', cat:'role', tag:'☁️ Cloud',
+    colors:['#4facfe','#00f2fe'],
+    blocks:[
+      bBanner('rect','0,20,25','Cloud Architect','fff',140,'fadeIn'),
+      bTyping('AWS · GCP · Azure;Infrastructure at scale;Cloud-native first','4facfe'),
+      bBio('☁️ Cloud architect designing scalable, fault-tolerant infrastructure. Serverless, containers, and everything in between.'),
+      bSkills(['aws','gcp','azure','terraform','kubernetes','docker','python','bash']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'),
+    ]
+  },
+  { id:'opensource', name:'OSS Maintainer', cat:'role', tag:'🌍 Open Source',
+    colors:['#43e97b','#38f9d7'],
+    blocks:[
+      bBanner('waving','0,15,10','Open Source Maintainer','fff',180,'twinkling'),
+      bTyping('Maintaining open source;Building for the community;Issues welcome 👋','43e97b'),
+      bBio('🌍 Open source maintainer and contributor. I believe software is better when built in public.'),
+      bSkills(['javascript','typescript','nodejs','python','git','docker','github','markdown']),
+      bDiv(), bStats('tokyonight'), bStreak('tokyonight'), bTrophy('flat'),
+    ]
+  },
+  { id:'techlead', name:'Tech Lead', cat:'role', tag:'🏗️ Tech Lead',
+    colors:['#667eea','#764ba2'],
+    blocks:[
+      bBanner('waving','6,11,20','Engineering Lead','fff',180,'twinkling'),
+      bTyping('Leading engineering teams;Architecture & delivery;Mentoring developers','667eea'),
+      bBio('🏗️ Engineering lead with a hands-on approach. I care about team velocity, system design, and shipping things that matter.'),
+      bSkills(['javascript','typescript','python','docker','kubernetes','aws','postgresql','graphql']),
+      bDiv(), bStats('radical'), bStreak('radical'), bTrophy('radical'),
+    ]
+  },
+  { id:'founder', name:'Founder / CTO', cat:'role', tag:'🚀 Founder',
+    colors:['#f6d365','#fda085'],
+    blocks:[
+      bBanner('waving','25,30,5','Founder & CTO','fff',180,'twinkling'),
+      bTyping('Building startups;Shipping 0→1;Solving real problems','f6d365'),
+      bBio('🚀 Founder and builder. I turn ideas into products, products into companies, and problems into opportunities.'),
+      bSkills(['typescript','react','nodejs','postgresql','docker','aws','stripe','notion']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'indie-hacker', name:'Indie Hacker', cat:'role', tag:'💡 Indie',
+    colors:['#f093fb','#fbc2eb'],
+    blocks:[
+      bBanner('egg','20,0,10','Indie Hacker','fff',160,'twinkling'),
+      bTyping('Building in public;Profitable not venture-backed;Shipping side projects','f093fb'),
+      bBio('💡 Indie hacker building profitable products solo. Revenue > funding. I write about building in public.'),
+      bSkills(['javascript','typescript','react','nextjs','nodejs','postgresql','stripe','vercel']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+
+  // ── Language-specific ─────────────────────────────────────
+  { id:'javascript', name:'JavaScript Dev', cat:'language', tag:'JS Yellow',
+    colors:['#f7df1e','#f0c000'],
+    blocks:[
+      bBanner('waving','0,25,0','JavaScript Developer','000',180,'twinkling'),
+      bTyping('JavaScript everywhere;Node · React · Vue;V8 is my VM','f0c000'),
+      bBio('⚡ JavaScript developer who ships code on both client and server. npm install happiness.'),
+      bSkills(['javascript','nodejs','react','vuejs','nextjs','express','mongodb','redis']),
+      bDiv(), bStats('radical'), bStreak('radical'), bLangs('radical'),
+    ]
+  },
+  { id:'typescript', name:'TypeScript Master', cat:'language', tag:'TS Blue',
+    colors:['#3178c6','#4b9de8'],
+    blocks:[
+      bBanner('waving','0,20,25','TypeScript Developer','fff',180,'twinkling'),
+      bTyping('TypeScript at scale;Type-safe everything;Strict mode enabled','3178c6'),
+      bBio('🔷 TypeScript advocate. I believe in types, tests, and zero runtime surprises. Life is too short for `any`.'),
+      bSkills(['typescript','javascript','react','nextjs','nodejs','zod','prisma','graphql']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'), bLangs('cobalt'),
+    ]
+  },
+  { id:'python', name:'Python Developer', cat:'language', tag:'🐍 Python',
+    colors:['#3776ab','#ffd43b'],
+    blocks:[
+      bBanner('waving','0,20,10','Python Developer','fff',180,'twinkling'),
+      bTyping('Python is life;Django · FastAPI · Flask;Simple is better than complex','3776ab'),
+      bBio('🐍 Pythonista building everything from web APIs to ML pipelines. import antigravity.'),
+      bSkills(['python','django','fastapi','postgresql','redis','docker','celery','pytest']),
+      bDiv(), bStats('dracula'), bStreak('dracula'), bLangs('dracula'),
+    ]
+  },
+  { id:'rust', name:'Rust Enthusiast', cat:'language', tag:'🦀 Rust',
+    colors:['#f74c00','#ce412b'],
+    blocks:[
+      bBanner('waving','0,30,0','Rust Developer','fff',180,'twinkling'),
+      bTyping('Memory safe by default;Zero-cost abstractions;Fighting the borrow checker','f74c00'),
+      bBio('🦀 Rust developer chasing blazingly fast, memory-safe systems. The compiler is always right, eventually.'),
+      bSkills(['rust','cpp','c','webassembly','linux','git','docker','bash']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'), bLangs('github_dark'),
+    ]
+  },
+  { id:'golang', name:'Go Developer', cat:'language', tag:'🔵 Go',
+    colors:['#00add8','#007d9c'],
+    blocks:[
+      bBanner('waving','0,20,25','Go Developer','fff',180,'twinkling'),
+      bTyping('Simple is better;Concurrency with goroutines;Go is the answer','00add8'),
+      bBio('🔵 Gopher writing clean, concurrent services. Go\'s simplicity is a feature, not a limitation.'),
+      bSkills(['golang','docker','kubernetes','postgresql','redis','grpc','protobuf','linux']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'), bLangs('cobalt'),
+    ]
+  },
+  { id:'java', name:'Java Developer', cat:'language', tag:'☕ Java',
+    colors:['#ed8b00','#f5a623'],
+    blocks:[
+      bBanner('waving','0,25,20','Java Developer','fff',180,'twinkling'),
+      bTyping('Enterprise Java;Spring Boot ecosystem;Write once run anywhere','ed8b00'),
+      bBio('☕ Java developer building enterprise-grade applications. Spring ecosystem advocate, microservices enthusiast.'),
+      bSkills(['java','spring','maven','postgresql','docker','kubernetes','aws','kafka']),
+      bDiv(), bStats('dark'), bStreak('dark'),
+    ]
+  },
+  { id:'kotlin', name:'Kotlin / Android', cat:'language', tag:'🟣 Kotlin',
+    colors:['#7f52ff','#b24bff'],
+    blocks:[
+      bBanner('waving','20,0,5','Kotlin Developer','fff',180,'twinkling'),
+      bTyping('Kotlin first · Android · Multiplatform;Modern Android dev;Coroutines everywhere','7f52ff'),
+      bBio('🟣 Kotlin developer building native Android apps and multiplatform solutions. Coroutines make async fun.'),
+      bSkills(['kotlin','java','android','compose','firebase','ktor','room','gradle']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'swift', name:'Swift / iOS', cat:'language', tag:'🍎 Swift',
+    colors:['#f05138','#ff6b50'],
+    blocks:[
+      bBanner('waving','0,30,5','iOS Developer','fff',180,'twinkling'),
+      bTyping('Swift & SwiftUI;Native iOS apps;App Store shipped','f05138'),
+      bBio('🍎 iOS developer crafting native apps with Swift and SwiftUI. Obsessed with smooth animations and great UX.'),
+      bSkills(['swift','swiftui','xcode','firebase','coredata','fastlane','git','figma']),
+      bDiv(), bStats('dark'), bStreak('dark'),
+    ]
+  },
+  { id:'ruby', name:'Ruby on Rails', cat:'language', tag:'💎 Ruby',
+    colors:['#cc342d','#d9534f'],
+    blocks:[
+      bBanner('waving','0,30,20','Ruby Developer','fff',180,'twinkling'),
+      bTyping('Convention over configuration;Rails ecosystem;Matz is nice so we are nice','cc342d'),
+      bBio('💎 Rubyist and Rails developer who believes code should be beautiful to read. DRY, SOLID, and shipping fast.'),
+      bSkills(['ruby','rails','postgresql','redis','elasticsearch','docker','sidekiq','rspec']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'php', name:'PHP Developer', cat:'language', tag:'🐘 PHP',
+    colors:['#777bb4','#9b8ee8'],
+    blocks:[
+      bBanner('waving','20,5,0','PHP Developer','fff',180,'twinkling'),
+      bTyping('Laravel · Symfony;Modern PHP;The web runs on PHP','777bb4'),
+      bBio('🐘 Modern PHP developer. Laravel is my framework of choice — elegant syntax, powerful features, great community.'),
+      bSkills(['php','laravel','composer','mysql','redis','docker','javascript','tailwindcss']),
+      bDiv(), bStats('dark'), bStreak('dark'),
+    ]
+  },
+  { id:'dotnet', name:'.NET Developer', cat:'language', tag:'🔵 .NET',
+    colors:['#512bd4','#7a4fe8'],
+    blocks:[
+      bBanner('waving','20,0,10','.NET Developer','fff',180,'twinkling'),
+      bTyping('C# · ASP.NET · Blazor;Cross-platform .NET;Enterprise patterns','512bd4'),
+      bBio('🔵 .NET developer building high-performance web APIs and desktop apps. Clean architecture is a non-negotiable.'),
+      bSkills(['csharp','dotnet','azure','sqlserver','docker','blazor','ef','signalr']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'cpp', name:'C++ Systems Dev', cat:'language', tag:'⚡ C++',
+    colors:['#00599c','#0e74c8'],
+    blocks:[
+      bBanner('shark','0,20,25','C++ Developer','fff',200,'twinkling'),
+      bTyping('Systems programming;Zero overhead abstractions;Performance is a feature','00599c'),
+      bBio('⚡ C++ developer working on systems software, game engines, and performance-critical applications. Manual memory = full control.'),
+      bSkills(['cpp','c','rust','cmake','linux','docker','git','llvm']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+  { id:'elixir', name:'Elixir Dev', cat:'language', tag:'💜 Elixir',
+    colors:['#4b275f','#7b4d9e'],
+    blocks:[
+      bBanner('waving','20,5,0','Elixir Developer','fff',180,'twinkling'),
+      bTyping('Elixir & Phoenix;Fault-tolerant systems;Let it crash','4b275f'),
+      bBio('💜 Elixir developer building distributed, fault-tolerant systems. The BEAM VM makes concurrency a joy.'),
+      bSkills(['elixir','phoenix','ecto','postgresql','docker','redis','graphql','linux']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+
+  // ── Visual Styles ──────────────────────────────────────────
+  { id:'minimal', name:'Minimal', cat:'style', tag:'✦ Clean',
+    colors:['#1a1a2e','#333'],
+    blocks:[
+      bHeading('Your Name', '👋', 'left'),
+      bBio('Full-stack developer. I build products that people love.', 'left'),
+      bCustom('---\n\n**Currently:** Working on something cool 🚀\n\n**Tech:** TypeScript · React · Node.js · PostgreSQL\n\n**Contact:** [website](https://yoursite.com) · [twitter](https://twitter.com)'),
+    ]
+  },
+  { id:'hacker', name:'Hacker / Terminal', cat:'style', tag:'💻 Terminal',
+    colors:['#00ff41','#0d1117'],
+    blocks:[
+      bBanner('shark','0,30,20','root@github:~','00FF41',200,'twinkling'),
+      bCustom('```bash\n$ whoami\nyour-username\n\n$ cat skills.txt\nPython | Bash | C | Linux | Docker | Kubernetes\n\n$ git log --oneline -3\nfe3a1b3 (HEAD) fix: production is stable, probably\nb7c2a91 feat: add more coffee to development pipeline\na1f5e22 init: hello world\n```'),
+      bSkills(['python','bash','linux','docker','kubernetes','git','vim','rust'],'flat-square','left'),
+      bDiv('line'), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+  { id:'creative', name:'Creative / Colorful', cat:'style', tag:'🌈 Creative',
+    colors:['#f093fb','#fbc2eb'],
+    blocks:[
+      bBanner('venom','0,30,10','✨ Your Name ✨','fff',200,'twinkling'),
+      bTyping('Designer who codes 🎨;Creative developer 🚀;Making the web beautiful 💅','f093fb'),
+      bBio('🌈 I live at the intersection of design and code. Figma to production in 0 to 100.'),
+      bSkills(['figma','react','framermotion','tailwindcss','javascript','typescript','threejs','gsap']),
+      bDiv('gradient'), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'academic', name:'Researcher / PhD', cat:'style', tag:'🎓 Academic',
+    colors:['#2c5282','#4299e1'],
+    blocks:[
+      bBanner('rect','0,20,25','Researcher','fff',140,'fadeIn'),
+      bTyping('PhD Candidate;Computer Science;Publishing papers','2c5282'),
+      bBio('🎓 CS researcher working on distributed systems and formal verification. Writing papers, building tools, bridging theory and practice.'),
+      bSkills(['python','latex','r','julia','tensorflow','git','linux','matlab']),
+      bDiv(), bStats('cobalt'), bLangs('cobalt'),
+    ]
+  },
+  { id:'student', name:'Student / Junior', cat:'style', tag:'📚 Student',
+    colors:['#ffeaa7','#fdcb6e'],
+    blocks:[
+      bBanner('waving','0,25,10','Computer Science Student','fff',180,'twinkling'),
+      bTyping('Learning every day 📚;CS Student at University;Open to opportunities','fdcb6e'),
+      bBio('📚 Computer Science student on a mission to write code that matters. Still figuring things out — and loving the journey.'),
+      bSkills(['python','javascript','java','react','nodejs','git','html','css']),
+      bDiv(), bStats('tokyonight'), bStreak('tokyonight'),
+    ]
+  },
+  { id:'freelancer', name:'Freelancer', cat:'style', tag:'💼 Freelance',
+    colors:['#11998e','#38ef7d'],
+    blocks:[
+      bBanner('waving','0,15,5','Freelance Developer','fff',180,'twinkling'),
+      bTyping('Available for projects 🟢;Full-stack freelancer;Remote worldwide','11998e'),
+      bBio('💼 Freelance developer available for hire. I take your idea from wireframe to deployed product. Let\'s build something together.'),
+      bSkills(['javascript','typescript','react','nodejs','postgresql','docker','stripe','vercel']),
+      bSocials(), bDiv(), bStats('radical'),
+    ]
+  },
+  { id:'devrel', name:'DevRel / Advocate', cat:'style', tag:'🎙️ DevRel',
+    colors:['#f6ad55','#ed8936'],
+    blocks:[
+      bBanner('waving','25,30,0','Developer Advocate','fff',180,'twinkling'),
+      bTyping('Developer Relations;Tech speaker & blogger;Building communities','f6ad55'),
+      bBio('🎙️ Developer advocate building bridges between product teams and developer communities. I code, speak, write, and stream.'),
+      bSkills(['javascript','typescript','react','graphql','docker','git','markdown','figma']),
+      bSocials(), bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+
+  // ── Color Themes ───────────────────────────────────────────
+  { id:'theme-ocean', name:'Ocean Blue', cat:'theme', tag:'🌊 Ocean',
+    colors:['#0f3460','#1a6fc4'],
+    blocks:[
+      bBanner('waving','0,20,25','Your Name','fff',180,'twinkling'),
+      bTyping('Deep sea developer;Building with currents;Diving into code','1a6fc4'),
+      bBio('🌊 Developer exploring the depths of technology. Always swimming toward the next big thing.'),
+      bSkills(['javascript','typescript','react','nodejs','postgresql','docker','aws','graphql']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'),
+    ]
+  },
+  { id:'theme-forest', name:'Forest Green', cat:'theme', tag:'🌲 Forest',
+    colors:['#134e1b','#27ae60'],
+    blocks:[
+      bBanner('waving','0,15,5','Your Name','fff',180,'twinkling'),
+      bTyping('Growing code organically;Sustainable development;Branching out','27ae60'),
+      bBio('🌲 Developer who plants seeds of code and watches them grow. Sustainable, maintainable, and green by default.'),
+      bSkills(['python','javascript','nodejs','postgresql','docker','linux','bash','git']),
+      bDiv(), bStats('tokyonight'), bStreak('tokyonight'),
+    ]
+  },
+  { id:'theme-sunset', name:'Sunset Orange', cat:'theme', tag:'🌅 Sunset',
+    colors:['#f46b45','#eea849'],
+    blocks:[
+      bBanner('waving','0,30,0','Your Name','fff',180,'twinkling'),
+      bTyping('Chasing the horizon;Building at golden hour;Code · Caffeine · Ship','f46b45'),
+      bBio('🌅 Developer with a warm approach to building. I ship code before sunset — every day, without fail.'),
+      bSkills(['javascript','typescript','react','nodejs','mongodb','docker','firebase','tailwindcss']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'theme-neon', name:'Neon Cyber', cat:'theme', tag:'⚡ Neon',
+    colors:['#f72585','#7209b7'],
+    blocks:[
+      bBanner('shark','0,30,20','SYS.INIT > USERNAME','fff',200,'twinkling'),
+      bTyping('Cyberpunk developer ⚡;Living in the future;Neon-lit codebase','f72585'),
+      bBio('⚡ Developer from the digital frontier. I write code that glows in the dark and runs at the speed of light.'),
+      bSkills(['typescript','rust','webassembly','react','nodejs','docker','linux','threejs']),
+      bDiv('gradient'), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'theme-space', name:'Deep Space', cat:'theme', tag:'🚀 Space',
+    colors:['#0f0c29','#302b63'],
+    blocks:[
+      bBanner('waving','6,11,20','Mission Control','fff',200,'twinkling'),
+      bTyping('Houston, we have a commit;Navigating the codebase;Light-speed deployments','302b63'),
+      bBio('🚀 Developer exploring the infinite possibilities of software. Every commit is a small step for code, a giant leap for the product.'),
+      bSkills(['typescript','rust','go','kubernetes','aws','terraform','docker','postgresql']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'), bTrophy('radical'),
+    ]
+  },
+  { id:'theme-rose', name:'Rose / Pink', cat:'theme', tag:'🌸 Rose',
+    colors:['#c94b9e','#e91e8c'],
+    blocks:[
+      bBanner('egg','0,30,10','Your Name','fff',160,'twinkling'),
+      bTyping('Making the web bloom 🌸;Frontend & fullstack;Details make the difference','e91e8c'),
+      bBio('🌸 Developer who believes great software should be as beautiful as it is functional. Aesthetics matter.'),
+      bSkills(['javascript','typescript','react','nextjs','framermotion','tailwindcss','figma','nodejs']),
+      bDiv('gradient'), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'theme-mono', name:'Monochrome', cat:'theme', tag:'⬛ Mono',
+    colors:['#111','#444'],
+    blocks:[
+      bBanner('rect','0,30,20','Your Name','fff',140,'fadeIn'),
+      bTyping('Less is more;Black & white thinking;Simplicity scales','ffffff'),
+      bBio('⬛ Developer who removes everything that isn\'t essential. Minimalist design, maximalist output.'),
+      bSkills(['javascript','typescript','go','rust','linux','docker','git','bash']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+  { id:'theme-retro', name:'Retro Terminal', cat:'theme', tag:'🟩 Retro',
+    colors:['#003b00','#00ff00'],
+    blocks:[
+      bBanner('rect','0,30,5','WELCOME TO MY PROFILE','00FF00',120,'fadeIn'),
+      bCustom('```\n ██████╗ ██████╗ ██████╗ ███████╗\n██╔════╝██╔═══██╗██╔══██╗██╔════╝\n██║     ██║   ██║██║  ██║█████╗  \n██║     ██║   ██║██║  ██║██╔══╝  \n╚██████╗╚██████╔╝██████╔╝███████╗\n └╚═════╝ ╚═════╝ ╚═════╝ ╚══════╝\n```'),
+      bSkills(['c','cpp','rust','assembly','linux','bash','vim','git'],'flat-square','left'),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+
+  // ── Specialty ─────────────────────────────────────────────
+  { id:'fullstack-aws', name:'AWS Specialist', cat:'specialty', tag:'☁️ AWS',
+    colors:['#ff9900','#ffac30'],
+    blocks:[
+      bBanner('waving','0,25,20','AWS Cloud Developer','fff',180,'twinkling'),
+      bTyping('AWS Certified;Serverless & containers;Infrastructure as Code','ff9900'),
+      bBio('☁️ AWS specialist building scalable cloud applications. Lambda, ECS, RDS — I know where to put things.'),
+      bSkills(['aws','terraform','docker','kubernetes','python','nodejs','postgresql','redis']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'api-dev', name:'API Developer', cat:'specialty', tag:'🔌 APIs',
+    colors:['#4facfe','#00f2fe'],
+    blocks:[
+      bBanner('rect','0,20,25','API Developer','fff',140,'fadeIn'),
+      bTyping('REST · GraphQL · gRPC;API-first development;SDKs and documentation','4facfe'),
+      bBio('🔌 API developer who treats endpoints as products. Clear documentation, great DX, and zero breaking changes.'),
+      bSkills(['nodejs','typescript','graphql','grpc','postgresql','redis','docker','swagger']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'),
+    ]
+  },
+  { id:'dba', name:'Database Engineer', cat:'specialty', tag:'🗄️ DBA',
+    colors:['#2c5282','#63b3ed'],
+    blocks:[
+      bBanner('rect','0,20,25','Database Engineer','fff',140,'fadeIn'),
+      bTyping('SQL is not boring;Query optimization;Data at scale','2c5282'),
+      bBio('🗄️ Database engineer obsessed with query performance, schema design, and keeping data consistent at any scale.'),
+      bSkills(['postgresql','mysql','mongodb','redis','elasticsearch','kafka','python','sql']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'),
+    ]
+  },
+  { id:'platform', name:'Platform Engineer', cat:'specialty', tag:'🏗️ Platform',
+    colors:['#718096','#a0aec0'],
+    blocks:[
+      bBanner('waving','0,25,20','Platform Engineer','fff',180,'twinkling'),
+      bTyping('Developer Experience;Internal platforms;Paved paths not golden cages','718096'),
+      bBio('🏗️ Platform engineer building the internal tools and infrastructure that make product teams go faster.'),
+      bSkills(['kubernetes','terraform','docker','python','golang','argocd','helm','prometheus']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+  { id:'embedded', name:'Embedded / IoT', cat:'specialty', tag:'🔌 IoT',
+    colors:['#00b09b','#96c93d'],
+    blocks:[
+      bBanner('waving','0,15,20','Embedded Developer','fff',180,'twinkling'),
+      bTyping('Firmware · RTOS · HAL;IoT systems;Bits and bytes','00b09b'),
+      bBio('🔌 Embedded developer bridging hardware and software. From bare metal to RTOS — I speak the language of silicon.'),
+      bSkills(['c','cpp','rust','python','cmake','linux','git','bash']),
+      bDiv(), bStats('github_dark'), bStreak('github_dark'),
+    ]
+  },
+  { id:'webassembly', name:'WebAssembly Dev', cat:'specialty', tag:'⚡ Wasm',
+    colors:['#654ff0','#8470ff'],
+    blocks:[
+      bBanner('waving','20,0,5','WebAssembly Developer','fff',180,'twinkling'),
+      bTyping('Native performance in the browser;Rust + Wasm;The future of the web','654ff0'),
+      bBio('⚡ WebAssembly developer pushing the limits of what runs in the browser. Rust to Wasm pipeline, blazing fast.'),
+      bSkills(['rust','cpp','webassembly','typescript','react','nodejs','cmake','python']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'graphql', name:'GraphQL Expert', cat:'specialty', tag:'🔗 GraphQL',
+    colors:['#e535ab','#ff69b4'],
+    blocks:[
+      bBanner('waving','20,0,15','GraphQL Developer','fff',180,'twinkling'),
+      bTyping('Schemas over REST;GraphQL Federation;Type-safe APIs','e535ab'),
+      bBio('🔗 GraphQL specialist building federated APIs that developers love. Schema-first, type-safe, and blazing fast.'),
+      bSkills(['graphql','typescript','nodejs','react','postgresql','redis','docker','apollo']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'serverless', name:'Serverless Dev', cat:'specialty', tag:'⚡ Serverless',
+    colors:['#ff8008','#ffc837'],
+    blocks:[
+      bBanner('waving','0,25,20','Serverless Developer','fff',180,'twinkling'),
+      bTyping('Functions as a Service;Pay per execution;Never manage a server again','ff8008'),
+      bBio('⚡ Serverless advocate building event-driven, infinitely scalable systems. No servers, no ops, no limits.'),
+      bSkills(['nodejs','typescript','aws','lambda','dynamodb','sqs','terraform','python']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'technical-writer', name:'Technical Writer', cat:'specialty', tag:'✍️ Writing',
+    colors:['#5f27cd','#a29bfe'],
+    blocks:[
+      bBanner('rect','20,5,0','Technical Writer','fff',140,'fadeIn'),
+      bTyping('Documentation that developers love;Writing for humans;Code + words','5f27cd'),
+      bBio('✍️ Technical writer who codes. I turn complex systems into clear documentation, tutorials, and API references.'),
+      bSkills(['markdown','git','python','javascript','nodejs','github','docusaurus','figma']),
+      bDiv(), bStats('midnight-purple'),
+    ]
+  },
+  { id:'ai-prompt', name:'AI / Prompt Eng', cat:'specialty', tag:'🤖 AI',
+    colors:['#a29bfe','#6c5ce7'],
+    blocks:[
+      bBanner('waving','20,5,0','AI Engineer','fff',180,'twinkling'),
+      bTyping('LLMs · RAG · Agents;Prompt engineering;Building with AI APIs','a29bfe'),
+      bBio('🤖 AI engineer building LLM-powered applications. RAG pipelines, fine-tuning, and responsible AI deployment.'),
+      bSkills(['python','pytorch','fastapi','postgresql','docker','langchain','pinecone','openai']),
+      bDiv(), bStats('midnight-purple'), bStreak('midnight-purple'),
+    ]
+  },
+  { id:'defi', name:'DeFi Developer', cat:'specialty', tag:'💰 DeFi',
+    colors:['#f7931a','#ff9f43'],
+    blocks:[
+      bBanner('waving','0,25,10','DeFi Developer','fff',180,'twinkling'),
+      bTyping('DeFi protocols;Yield · Liquidity · AMMs;Code is law','f7931a'),
+      bBio('💰 DeFi developer building decentralized financial protocols. Smart contracts, liquidity pools, and on-chain governance.'),
+      bSkills(['solidity','typescript','javascript','react','ethers','hardhat','foundry','ipfs']),
+      bDiv(), bStats('radical'), bStreak('radical'),
+    ]
+  },
+  { id:'microservices', name:'Microservices', cat:'specialty', tag:'🧩 Micro',
+    colors:['#667eea','#764ba2'],
+    blocks:[
+      bBanner('rect','0,20,25','Microservices Architect','fff',140,'fadeIn'),
+      bTyping('Event-driven architecture;Domain-driven design;Scale independently','667eea'),
+      bBio('🧩 Microservices architect decomposing monoliths into elegant, independently deployable services. Kafka and Kubernetes are my best friends.'),
+      bSkills(['golang','kubernetes','docker','kafka','grpc','postgresql','redis','terraform']),
+      bDiv(), bStats('cobalt'), bStreak('cobalt'),
+    ]
+  },
+
+  // ── Quick Start ────────────────────────────────────────────
+  { id:'quick-minimal', name:'Quick Start', cat:'quickstart', tag:'⚡ 3 blocks',
+    colors:['#5b6cf9','#818cf8'],
+    blocks:[
+      bHeading('Hi, I\'m Your Name', '👋', 'left'),
+      bBio('Developer · Builder · Open Source contributor. Currently working on something exciting.', 'left'),
+      bSkills(['javascript','typescript','react','nodejs','docker']),
+    ]
+  },
+  { id:'quick-stats', name:'Stats Only', cat:'quickstart', tag:'📊 Stats',
+    colors:['#764ba2','#a29bfe'],
+    blocks:[
+      bHeading('GitHub Stats', '📊', 'center'),
+      bDiv(), bStats('radical'), bStreak('radical'), bLangs('radical'), bTrophy('radical'),
+    ]
+  },
+  { id:'quick-social', name:'Social Profile', cat:'quickstart', tag:'🔗 Social',
+    colors:['#1DA1F2','#00acee'],
+    blocks:[
+      bBanner('egg','0,20,25','Your Name','fff',160,'twinkling'),
+      bBio('Building on the internet. Hit me up 👇', 'center'),
+      bSocials(), bViews('1DA1F2'),
+    ]
+  },
+  { id:'quick-full', name:'Complete Profile', cat:'quickstart', tag:'🌟 Full',
+    colors:['#f6d365','#fda085'],
+    blocks:[
+      bBanner('waving','0,25,10','Your Name','fff',180,'twinkling'),
+      bTyping('Developer · Builder · Maker','5B6CF9'),
+      bBio('👋 A passionate developer who loves building things. Add your bio here!', 'center'),
+      bSkills(['javascript','typescript','react','nodejs','python','docker']),
+      bSocials(), bViews(),
+      bDiv(), bStats('radical'), bStreak('radical'), bLangs('radical'),
+    ]
+  },
+];
+
+const TPL_CATS = [
+  { id:'all',        label:'All' },
+  { id:'quickstart', label:'⚡ Quick Start' },
+  { id:'role',       label:'👤 By Role' },
+  { id:'language',   label:'💻 Language' },
+  { id:'style',      label:'🎨 Style' },
+  { id:'theme',      label:'🎨 Theme' },
+  { id:'specialty',  label:'🔬 Specialty' },
+];
+
+// ── Gallery UI ────────────────────────────────────────────────────
+let gallerySearch = '';
+let galleryCat    = 'all';
+
+function openGallery() {
+  $('gallery-overlay').classList.remove('hidden');
+  buildGalleryCats();
+  renderGallery();
+  $('gallery-search').focus();
+}
+
+function closeGallery() {
+  $('gallery-overlay').classList.add('hidden');
+}
+
+function buildGalleryCats() {
+  const el = $('gallery-cats');
+  if (el.children.length) return; // already built
+  TPL_CATS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'gallery-cat' + (c.id === 'all' ? ' active' : '');
+    btn.textContent = c.label;
+    btn.dataset.cat = c.id;
+    btn.addEventListener('click', () => {
+      $qa('#gallery-cats .gallery-cat').forEach(b => b.classList.remove('active'));
+      btn.classList.add('active');
+      galleryCat = c.id;
+      renderGallery();
+    });
+    el.appendChild(btn);
+  });
+}
+
+function renderGallery() {
+  const q = gallerySearch.toLowerCase();
+  const filtered = TEMPLATES.filter(t => {
+    if (galleryCat !== 'all' && t.cat !== galleryCat) return false;
+    if (q && !t.name.toLowerCase().includes(q) && !t.tag.toLowerCase().includes(q)) return false;
+    return true;
+  });
+
+  const countEl = $('gallery-count');
+  const grid    = $('gallery-grid');
+  countEl.textContent = `${filtered.length} template${filtered.length !== 1 ? 's' : ''}`;
+  grid.innerHTML = '';
+
+  if (!filtered.length) {
+    grid.innerHTML = '<div class="gallery-empty">No templates match your search</div>';
+    return;
+  }
+
+  filtered.forEach(tpl => {
+    const card = document.createElement('button');
+    card.className = 'tpl-card-btn';
+    const [c1, c2] = tpl.colors;
+    card.innerHTML = `
+      <div class="tpl-thumb">
+        <div class="tpl-thumb-bar" style="background:linear-gradient(135deg,${c1},${c2})"></div>
+        <div class="tpl-thumb-lines">
+          <div class="tpl-thumb-line" style="width:65%"></div>
+          <div class="tpl-thumb-line" style="width:80%"></div>
+        </div>
+      </div>
+      <div class="tpl-card-info">
+        <div class="tpl-card-name">${tpl.name}</div>
+        <div class="tpl-card-tag">${tpl.tag}</div>
+      </div>
+    `;
+    card.addEventListener('click', () => loadTemplate(tpl));
+    grid.appendChild(card);
+  });
+}
+
+function loadTemplate(tpl) {
+  if (S.blocks.length > 0) {
+    const ok = confirm(`Replace current canvas with "${tpl.name}" template?`);
+    if (!ok) return;
+  }
+  S.blocks = [];
+  S.sel    = null;
+  tpl.blocks.forEach(def => {
+    const reg = BLOCK_REGISTRY[def.type];
+    if (!reg) return;
+    S.blocks.push({ ...reg.defaults(), ...def, id: newId() });
+  });
+  closeGallery();
+  renderCanvas();
+  renderProps();
+}
+
+// Wire up gallery
+document.addEventListener('DOMContentLoaded', () => {
+  $('btn-gallery').addEventListener('click', openGallery);
+  $('gallery-close').addEventListener('click', closeGallery);
+  $('gallery-overlay').addEventListener('click', e => { if (e.target === $('gallery-overlay')) closeGallery(); });
+  $('gallery-search').addEventListener('input', e => { gallerySearch = e.target.value; renderGallery(); });
+  document.addEventListener('keydown', e => { if (e.key === 'Escape') closeGallery(); });
+});
+
 // expose for onclick attributes
 window.removeBlock    = removeBlock;
 window.duplicateBlock = duplicateBlock;
