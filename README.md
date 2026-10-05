@@ -1,126 +1,157 @@
 <div align="center">
 
+<img src="public/brand/mark.svg" alt="README Studio" width="120" />
+
 # README Studio
 
-### A premium GitHub profile README generator
+### Visual block editor for GitHub profile READMEs
 
-Fill in your details — the studio assembles the badges, stats and animated banners<br/>
-and exports clean, ready-to-paste markdown for the special repository that becomes your GitHub profile.
+Pick a template, drag blocks, tweak every property — export clean, ready-to-paste markdown.<br/>
+No login. No build step. Runs in the browser.
 
 <p>
-  <img src="https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-no%20build%20step-F59E0B?style=flat-square&labelColor=0c0d12" height="26" alt="Pure HTML/CSS/JS — no build step" />
-  <img src="https://img.shields.io/badge/80%2B%20icons-shields.io-0D9488?style=flat-square&labelColor=0c0d12" height="26" alt="80+ tech icons" />
-  <img src="https://img.shields.io/badge/5%20templates-animated-7C3AED?style=flat-square&labelColor=0c0d12" height="26" alt="5 animated templates" />
-  <img src="https://img.shields.io/badge/GitHub%20Pages-ready-22C55E?style=flat-square&labelColor=0c0d12" height="26" alt="GitHub Pages ready" />
+  <img src="https://img.shields.io/badge/HTML%20·%20CSS%20·%20JS-no%20build%20step-5B6CF9?style=flat-square&labelColor=0c0d12" height="26" alt="Pure HTML/CSS/JS — no build step" />
+  <img src="https://img.shields.io/badge/59%20templates-gallery-7C3AED?style=flat-square&labelColor=0c0d12" height="26" alt="59 ready-made templates" />
+  <img src="https://img.shields.io/badge/100%2B%20icons-shields.io-0D9488?style=flat-square&labelColor=0c0d12" height="26" alt="100+ tech icons" />
+  <img src="https://img.shields.io/badge/GitHub%20Pages-live-22C55E?style=flat-square&labelColor=0c0d12" height="26" alt="Deployed on GitHub Pages" />
 </p>
 
-<!-- TODO: add docs/media/demo.gif — a screen recording of the full builder flow -->
+<img src="docs/media/demo.gif" alt="README Studio demo: editing blocks, opening the template gallery, loading a template, switching to markdown view" width="100%" />
 
 <p><a href="https://takemygunq.github.io/readme-studio/">Open README Studio →</a></p>
 
 </div>
 
+<!-- ───────────────────────────────────────────── -->
+<div align="center">
+<svg width="100%" height="40" viewBox="0 0 1200 40" preserveAspectRatio="none" xmlns="http://www.w3.org/2000/svg">
+  <path d="M0,20 Q150,0 300,20 Q450,40 600,20 Q750,0 900,20 Q1050,40 1200,20 L1200,40 L0,40 Z" fill="#ECEEFF" opacity="0.5"/>
+</svg>
+</div>
+
 ---
-
-## Why not just write it by hand?
-
-Writing a GitHub profile README is ten minutes of copy-pasting service URLs, badge parameters and markdown alignment tricks.
-README Studio puts all of that behind a form: you type your name, pick the technologies you work with and choose a visual
-style — the generator handles the badge URLs, the stat card themes, the wave headers and the spacing. The output is plain
-markdown with no JavaScript and no runtime dependencies, so it works on GitHub exactly as it looks in the preview.
 
 ## How it works
 
-### 1. Fill in your identity
+### 1. Start from a template or build from scratch
 
-Enter your display name, GitHub username, title, bio and location. The username drives all the dynamic cards — stats,
-streaks, top languages — so set it early and the preview updates everywhere at once.
+Open the **Template Gallery** (59 templates across 6 categories) or drag blocks from the left panel onto the canvas. Every block is pre-configured — just add your username and the stats cards fill themselves.
 
-### 2. Pick your tech stack
+<table>
+  <tr>
+    <td width="50%">
+      <img src="https://img.shields.io/badge/By%20Role-15%20templates-667eea?style=flat-square&labelColor=0c0d12" /><br/>
+      <img src="https://img.shields.io/badge/By%20Language-13%20templates-3776ab?style=flat-square&labelColor=0c0d12" /><br/>
+      <img src="https://img.shields.io/badge/Visual%20Styles-7%20templates-f093fb?style=flat-square&labelColor=0c0d12" /><br/>
+      <img src="https://img.shields.io/badge/Color%20Themes-8%20templates-f46b45?style=flat-square&labelColor=0c0d12" /><br/>
+      <img src="https://img.shields.io/badge/Specialty-12%20templates-4facfe?style=flat-square&labelColor=0c0d12" /><br/>
+      <img src="https://img.shields.io/badge/Quick%20Start-4%20templates-43e97b?style=flat-square&labelColor=0c0d12" />
+    </td>
+    <td width="50%">
+      Search by keyword, filter by category, click to load. The canvas is replaced immediately — no confirmation, no friction.
+    </td>
+  </tr>
+</table>
 
-An icon picker covers 80+ technologies across languages, frameworks, databases, cloud providers and tools. Filter by
-category or search by name; selected skills appear as colored chips below the grid and translate to `shields.io`
-badges in the output.
+### 2. Click any block to edit its properties
 
-### 3. Configure GitHub Stats
+Select a block on the canvas — the right panel shows all its controls: text fields, sliders, dropdowns, color pickers, icon selectors. Every change reflects on the canvas instantly.
 
-Choose which cards to include — the stats grid, the streak counter, the top-languages breakdown and the trophy cabinet —
-and pick a colour theme. The stats blocks point at `github-readme-stats` and `streak-stats`, live services that render
-server-side SVGs directly in GitHub's markdown.
+**Block types available:**
 
-### 4. Choose a template
-
-| Template | Character |
+| Category | Blocks |
 |---|---|
-| **Pro** | Animated wave header via Capsule Render, typing animation, full stats |
-| **Minimal** | Plain markdown, no images, maximum readability |
-| **Hacker** | Dark terminal aesthetic, a `bash` code block for the intro |
-| **Creative** | Bright gradient shark-wave header, vibrant typing animation |
-| **Founder** | Centered name and title, dividers, no visual noise |
+| Header | Wave Banner (Capsule Render), Typing Animation |
+| Text | Heading, Paragraph |
+| Content | Tech Stack (100+ icons), Custom Markdown, SVG Icon |
+| Stats | GitHub Stats, Streak Stats, Top Languages, Trophy Cabinet |
+| Social | Social Links, View Counter |
+| Layout | Divider |
 
-### 5. Copy and deploy
+### 3. Drag to reorder
 
-The Markdown tab shows the raw output; the Preview tab renders it as HTML. Copy to clipboard or download
-the file, then paste it into the `README.md` of a repository named exactly like your GitHub username.
+Every block has a drag handle. Grab and drop to reorder the canvas — the markdown output updates immediately.
+
+### 4. Export
+
+Switch to **Markdown** to see the raw output, or click **Copy Markdown** / **.md** to export. Paste into `<your-username>/<your-username>/README.md` on GitHub.
+
+---
+
+<!-- ───────────────────────────────────────────── -->
+<div align="center">
+<svg width="100%" height="1" viewBox="0 0 1200 1" xmlns="http://www.w3.org/2000/svg">
+  <line x1="0" y1="0" x2="1200" y2="0" stroke="#5B6CF9" stroke-width="2" stroke-dasharray="4 6" opacity="0.4"/>
+</svg>
+</div>
 
 ## Features
 
-- **Live preview** — markdown source and rendered HTML update on every keystroke, no manual refresh
-- **80+ tech icons** — covers languages, frontend, backend, mobile, databases, cloud, DevOps, AI/ML and tools; searchable and filterable
-- **GitHub Stats integration** — `github-readme-stats`, `streak-stats`, trophy cabinet and top languages with 10 colour themes
-- **Animated headers** — wave, shark and rect banners from Capsule Render; typing animation from `readme-typing-svg`
-- **5 templates** — Pro, Minimal, Hacker, Creative, Founder, each with a distinct visual language
-- **Profile view counter** — a `komarev.com` badge that counts visits
-- **Social badges** — GitHub, Twitter, LinkedIn, YouTube, DEV.to, personal website
-- **Zero dependencies** — pure HTML, CSS and vanilla JS; no build step, no `node_modules`, no bundler
-- **One click** — copy the markdown or download `README.md`; dark/light mode toggle in the studio itself
+- **Visual block editor** — click to select, right panel to configure, drag to reorder
+- **59 ready-made templates** — roles (Full Stack, ML Engineer, DevOps…), languages (Rust, Go, Python…), themes (Neon, Ocean, Deep Space…), quick-starts
+- **Template gallery** — search by keyword, filter by category, instant preview via color gradient cards
+- **100+ tech icons** — languages, frameworks, databases, cloud, DevOps, AI/ML; searchable by name, filterable by category
+- **Live markdown output** — switches between canvas and markdown with no re-generation delay
+- **GitHub Stats integration** — `github-readme-stats`, `streak-stats.demolab.com`, top languages, trophy cabinet; pick a color theme once and all cards match
+- **Animated headers** — wave, shark, rect, venom banners from Capsule Render; typing animation from `readme-typing-svg`
+- **Zero dependencies** — pure HTML, CSS and vanilla JS; no `node_modules`, no build tool, no server
 
-## Quick start (local)
+---
 
-No installation needed. Clone and open:
+## Quick start
+
+No installation. Clone and open:
 
 ```bash
 git clone https://github.com/takemygunq/readme-studio
 cd readme-studio
-open index.html          # macOS
-# xdg-open index.html   # Linux
-# start index.html       # Windows
-```
-
-Or serve it with any static server:
-
-```bash
-npx serve .
 python3 -m http.server 8080
+# open http://localhost:8080
 ```
+
+Or just open `index.html` directly in the browser (some external badge images won't load without a server due to CORS).
 
 ## Deploy your own copy
 
-The project is a folder of static files — it deploys anywhere that serves HTML.
+Fork → **Settings → Pages → Source: main / (root)** → your copy is live at `https://<username>.github.io/readme-studio/` in under a minute.
 
-### GitHub Pages (recommended)
+Works on Netlify Drop, Vercel, Cloudflare Pages, or any CDN — drag the folder and you're done.
 
-Fork the repository, then go to **Settings → Pages → Source** and select **main / (root)**. Your copy
-will be live at `https://<your-username>.github.io/readme-studio/` within a minute.
+---
 
-### Any static host
-
-Drag the folder onto Netlify Drop, Vercel, Cloudflare Pages or any CDN. No build step, no configuration.
+<!-- ───────────────────────────────────────────── -->
+<div align="center">
+<svg width="200" height="24" viewBox="0 0 200 24" xmlns="http://www.w3.org/2000/svg">
+  <rect x="0" y="10" width="80" height="2" rx="1" fill="#5B6CF9" opacity="0.3"/>
+  <circle cx="100" cy="12" r="4" fill="#5B6CF9" opacity="0.6"/>
+  <rect x="120" y="10" width="80" height="2" rx="1" fill="#5B6CF9" opacity="0.3"/>
+</svg>
+</div>
 
 ## Tech
 
-- **HTML + CSS custom properties** — the full design system lives in `:root` tokens; dark and light themes switch with one attribute
-- **Vanilla JS** — state object, form bindings, markdown generator, a lightweight markdown-to-HTML renderer for the preview panel
-- **Google Fonts** — Syne (display), DM Sans (UI), DM Mono (code preview)
-- **External badge services** — `shields.io` for tech and social badges; `capsule-render` and `readme-typing-svg` for animated elements; `github-readme-stats`, `streak-stats.demolab.com` and `github-profile-trophy` for live stat cards; `komarev.com` for the view counter
+```
+index.html          app shell: toolbar, 3-panel grid, gallery modal
+css/style.css       design system: tokens, layout, components
+js/icons-data.js    icon registry (100+ entries with shields.io params)
+js/app.js           block registry, state, canvas render, gallery, markdown export
+docs/media/         demo GIF and screenshots
+public/brand/       logo, mark, icon SVGs
+```
 
-```
-index.html          main page
-css/style.css       design tokens, layout, components
-js/icons-data.js    icon registry (id, name, shields.io params, category)
-js/templates.js     markdown generators for each template
-js/app.js           state, event bindings, preview rendering, copy/download
-```
+**External services used in generated README output** (no API keys, no accounts):
+
+| Service | Used for |
+|---|---|
+| `capsule-render.vercel.app` | Animated wave / shark banners |
+| `readme-typing-svg.demolab.com` | Typing animation |
+| `shields.io` | Tech stack badges |
+| `github-readme-stats.vercel.app` | GitHub stats card |
+| `streak-stats.demolab.com` | Streak card |
+| `github-profile-trophy` | Trophy cabinet |
+| `komarev.com` | Profile view counter |
+
+---
 
 ## License
 

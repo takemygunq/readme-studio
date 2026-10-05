@@ -1734,10 +1734,6 @@ function renderGallery() {
 }
 
 function loadTemplate(tpl) {
-  if (S.blocks.length > 0) {
-    const ok = confirm(`Replace current canvas with "${tpl.name}" template?`);
-    if (!ok) return;
-  }
   S.blocks = [];
   S.sel    = null;
   tpl.blocks.forEach(def => {
