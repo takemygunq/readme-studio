@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+<html lang="en" data-theme="">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, viewport-fit=cover">
+<title>README Studio</title>
+<meta name="description" content="Premium GitHub profile README generator. Build beautiful profiles with live preview, 80+ tech icons, GitHub stats, and animated templates.">
+<meta name="theme-color" content="#0c0d12">
+<meta property="og:title" content="README Studio">
+<meta property="og:description" content="Build your perfect GitHub profile README in minutes.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Syne:wght@400;600;700;800&family=DM+Sans:ital,opsz,wght@0,9..40,300;0,9..40,400;0,9..40,500;1,9..40,400&family=DM+Mono:wght@400;500&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+
+<!-- ═══════════════════════════════════════════════ HEADER -->
+<header class="site-header">
+  <div class="header-inner">
+    <div class="logo">
+      <div class="logo-mark">R/</div>
+      README Studio
+    </div>
+    <nav class="header-right">
+      <a href="https://docs.github.com/en/account-and-profile/setting-up-and-managing-your-github-profile/customizing-your-profile/managing-your-profile-readme" class="header-link" target="_blank">Docs</a>
+      <a href="https://github.com/topics/profile-readme" class="header-link" target="_blank">Inspiration</a>
+      <a href="https://github.com/takemygunq/readme-studio" class="header-link star" target="_blank">
+        <svg width="14" height="14" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2l3.09 6.26L22 9.27l-5 4.87 1.18 6.88L12 17.77l-6.18 3.25L7 14.14 2 9.27l6.91-1.01L12 2z"/></svg>
+        Star on GitHub
+      </a>
+    </nav>
+  </div>
+</header>
+
+<!-- Mobile panel toggle -->
+<div class="panel-toggle">
+  <button class="panel-toggle-btn active" data-panel="builder" onclick="switchPanel('builder')">⚙ Builder</button>
+  <button class="panel-toggle-btn" data-panel="preview" onclick="switchPanel('preview')">👁 Preview</button>
+</div>
+
+<!-- ═══════════════════════════════════════════════ APP -->
+<div class="app-layout">
+
+  <!-- ────────────────────────────── BUILDER PANEL -->
+  <aside id="builder-panel">
+    <p class="panel-label">Profile Builder</p>
+
+    <!-- 1. Identity -->
+    <div class="builder-section open" id="sec-identity">
+      <div class="section-head" onclick="toggleSection('sec-identity')">
+        <span class="section-num">1</span>
+        <span class="section-title">Identity</span>
+        <span class="section-chevron">›</span>
+      </div>
+      <div class="section-body">
+        <div class="field-row">
+          <div class="field">
+            <label for="in-name">Display Name</label>
+            <input type="text" id="in-name" class="input-field" placeholder="Alex Chen">
+          </div>
+          <div class="field">
+            <label for="in-username">GitHub Username</label>
+            <div class="input-prefix">
+              <span class="prefix-label">@</span>
+              <input type="text" id="in-username" placeholder="alexchen">
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="in-title">Title / Role</label>
+          <input type="text" id="in-title" class="input-field" placeholder="Full Stack Engineer · Open Source Enthusiast">
+        </div>
+        <div class="field">
+          <label for="in-bio">Bio</label>
+          <textarea id="in-bio" class="input-field" rows="3" maxlength="300" placeholder="A brief description about yourself, your interests, and what you're building..."></textarea>
+          <div class="char-count">0 / 300</div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="in-location">Location</label>
+            <input type="text" id="in-location" class="input-field" placeholder="San Francisco, CA">
+          </div>
+          <div class="field">
+            <label for="in-email">Email (optional)</label>
+            <input type="email" id="in-email" class="input-field" placeholder="hello@you.dev">
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 2. Socials -->
+    <div class="builder-section" id="sec-socials">
+      <div class="section-head" onclick="toggleSection('sec-socials')">
+        <span class="section-num">2</span>
+        <span class="section-title">Social Links</span>
+        <span class="section-chevron">›</span>
+      </div>
+      <div class="section-body collapsed">
+        <div class="field">
+          <label for="soc-github">GitHub</label>
+          <div class="input-prefix">
+            <span class="prefix-label">github.com/</span>
+            <input type="text" id="soc-github" placeholder="alexchen">
+          </div>
+        </div>
+        <div class="field">
+          <label for="soc-twitter">Twitter / X</label>
+          <div class="input-prefix">
+            <span class="prefix-label">@</span>
+            <input type="text" id="soc-twitter" placeholder="alexchen">
+          </div>
+        </div>
+        <div class="field">
+          <label for="soc-linkedin">LinkedIn</label>
+          <div class="input-prefix">
+            <span class="prefix-label">linkedin.com/in/</span>
+            <input type="text" id="soc-linkedin" placeholder="alexchen">
+          </div>
+        </div>
+        <div class="field-row">
+          <div class="field">
+            <label for="soc-youtube">YouTube</label>
+            <div class="input-prefix">
+              <span class="prefix-label">@</span>
+              <input type="text" id="soc-youtube" placeholder="channel">
+            </div>
+          </div>
+          <div class="field">
+            <label for="soc-dev">DEV.to</label>
+            <div class="input-prefix">
+              <span class="prefix-label">dev.to/</span>
+              <input type="text" id="soc-dev" placeholder="alexchen">
+            </div>
+          </div>
+        </div>
+        <div class="field">
+          <label for="soc-website">Personal Website</label>
+          <input type="url" id="soc-website" class="input-field" placeholder="https://alexchen.dev">
+        </div>
+      </div>
+    </div>
+
+    <!-- 3. Tech Stack -->
+    <div class="builder-section" id="sec-skills">
+      <div class="section-head" onclick="toggleSection('sec-skills')">
+        <span class="section-num">3</span>
+        <span class="section-title">Tech Stack &nbsp;<span id="skills-count" style="font-family:var(--font-mono);font-size:11px;background:var(--accent-glow);color:var(--accent);border:1px solid var(--accent);border-radius:10px;padding:1px 7px;font-weight:700">0</span></span>
+        <span class="section-chevron">›</span>
+      </div>
+      <div class="section-body collapsed">
+        <!-- Category tabs -->
+        <div class="cat-tabs" id="cat-tabs-root"></div>
+        <!-- Search -->
+        <div class="icon-search-wrap">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
+          <input type="text" id="icon-search" class="input-field" placeholder="Search technologies…">
+        </div>
+        <!-- Icon grid -->
+        <div id="icon-grid"></div>
+        <!-- Selected -->
+        <div class="selected-skills-wrap">
+          <div class="selected-skills-label">Selected</div>
+          <div id="selected-skills"><span class="empty-skills">No skills selected yet</span></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- 4. GitHub Stats -->
+    <div class="builder-section" id="sec-stats">
+      <div class="section-head" onclick="toggleSection('sec-stats')">
+        <span class="section-num">4</span>
+        <span class="section-title">GitHub Stats</span>
+        <span class="section-chevron">›</span>
+      </div>
+      <div class="section-body collapsed">
+        <div class="toggle-row">
+          <span class="toggle-label">Stats Card</span>
+          <input type="checkbox" id="stats-enabled" class="toggle" checked>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Streak Stats</span>
+          <input type="checkbox" id="stats-streak" class="toggle" checked>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Top Languages</span>
+          <input type="checkbox" id="stats-langs" class="toggle" checked>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Trophy Cabinet</span>
+          <input type="checkbox" id="stats-trophy" class="toggle">
+        </div>
+        <div class="field" style="margin-top:14px">
+          <label for="stat-theme">Stats Theme</label>
+          <select id="stat-theme" class="select-field">
+            <option value="radical">Radical (pink/orange)</option>
+            <option value="dark">Dark</option>
+            <option value="midnight-purple">Midnight Purple</option>
+            <option value="cobalt">Cobalt</option>
+            <option value="synthwave">Synthwave</option>
+            <option value="highcontrast">High Contrast</option>
+            <option value="dracula">Dracula</option>
+            <option value="tokyonight">Tokyo Night</option>
+            <option value="onedark">One Dark</option>
+            <option value="github_dark">GitHub Dark</option>
+          </select>
+        </div>
+      </div>
+    </div>
+
+    <!-- 5. Extras -->
+    <div class="builder-section" id="sec-extras">
+      <div class="section-head" onclick="toggleSection('sec-extras')">
+        <span class="section-num">5</span>
+        <span class="section-title">Extras</span>
+        <span class="section-chevron">›</span>
+      </div>
+      <div class="section-body collapsed">
+        <div class="field">
+          <label for="in-typing">Typing Animation Lines</label>
+          <input type="text" id="in-typing" class="input-field" placeholder="Full Stack Dev;Open Source;Building in public">
+          <div style="font-size:11px;color:var(--text-subtle);margin-top:4px">Separate lines with semicolons</div>
+        </div>
+        <div class="toggle-row">
+          <span class="toggle-label">Profile View Counter</span>
+          <input type="checkbox" id="ex-views" class="toggle" checked>
+        </div>
+      </div>
+    </div>
+
+    <!-- 6. Template -->
+    <div class="builder-section" id="sec-template">
+      <div class="section-head" onclick="toggleSection('sec-template')">
+        <span class="section-num">6</span>
+        <span class="section-title">Template</span>
+        <span class="section-chevron">›</span>
+      </div>
+      <div class="section-body collapsed">
+        <div class="tpl-grid">
+          <button class="tpl-card tpl-pro active" data-tpl="pro">
+            <div class="tpl-preview">🚀</div>
+            <div class="tpl-name">Pro</div>
+          </button>
+          <button class="tpl-card tpl-minimal" data-tpl="minimal">
+            <div class="tpl-preview">▤</div>
+            <div class="tpl-name">Minimal</div>
+          </button>
+          <button class="tpl-card tpl-hacker" data-tpl="hacker">
+            <div class="tpl-preview" style="color:#00FF41">$_</div>
+            <div class="tpl-name">Hacker</div>
+          </button>
+          <button class="tpl-card tpl-creative" data-tpl="creative">
+            <div class="tpl-preview">✨</div>
+            <div class="tpl-name">Creative</div>
+          </button>
+          <button class="tpl-card tpl-exec" data-tpl="exec">
+            <div class="tpl-preview">◈</div>
+            <div class="tpl-name">Founder</div>
+          </button>
+        </div>
+        <div style="margin-top:14px;padding:12px;background:var(--bg-elevated);border-radius:var(--radius);border:1px solid var(--border)">
+          <div style="font-size:12px;color:var(--text-muted);line-height:1.6">
+            <strong style="color:var(--accent)">How to use</strong><br>
+            1. Copy the markdown below<br>
+            2. Create a repo named exactly <code style="font-size:11px;padding:1px 5px;background:var(--bg-surface);border-radius:3px">&lt;your-username&gt;</code><br>
+            3. Add a <code style="font-size:11px;padding:1px 5px;background:var(--bg-surface);border-radius:3px">README.md</code> — paste and commit
+          </div>
+        </div>
+      </div>
+    </div>
+
+  </aside><!-- /builder-panel -->
+
+  <!-- ────────────────────────────── PREVIEW PANEL -->
+  <div id="preview-panel">
+    <div class="preview-header">
+      <div class="preview-tabs">
+        <button class="preview-tab active" data-tab="source">Markdown</button>
+        <button class="preview-tab" data-tab="rendered">Preview</button>
+      </div>
+      <div class="preview-actions">
+        <button class="btn-secondary" id="btn-download">
+          <svg width="14" height="14" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"/><polyline points="7 10 12 15 17 10"/><line x1="12" y1="15" x2="12" y2="3"/></svg>
+          Download .md
+        </button>
+        <button class="btn-primary" id="btn-copy">Copy Markdown</button>
+      </div>
+    </div>
+    <div class="preview-content">
+      <pre id="preview-source"># Fill in the form to generate your README…</pre>
+      <div id="preview-rendered" hidden></div>
+    </div>
+  </div>
+
+</div><!-- /app-layout -->
+
+<script src="js/icons-data.js"></script>
+<script src="js/templates.js"></script>
+<script>
+/* ── Inline bootstrap helpers ────────────────────────────── */
+
+// Build category tab pills
+document.addEventListener('DOMContentLoaded', () => {
+  const tabRoot = document.getElementById('cat-tabs-root');
+  ICON_CATS.forEach(c => {
+    const btn = document.createElement('button');
+    btn.className = 'cat-tab' + (c.id === 'all' ? ' active' : '');
+    btn.dataset.cat = c.id;
+    btn.textContent = c.label;
+    tabRoot.appendChild(btn);
+  });
+});
+
+// Section accordion toggle
+function toggleSection(id) {
+  const sec = document.getElementById(id);
+  const body = sec.querySelector('.section-body');
+  sec.classList.toggle('open');
+  body.classList.toggle('collapsed');
+}
+</script>
+<script src="js/app.js"></script>
+</body>
+</html>
